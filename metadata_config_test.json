@@ -1,0 +1,17 @@
+{
+  "metadata": {
+    "model_name": "gpt-4o-1120",
+    "model_type": "ChatGPTModel",
+    "track": "internal_reasoning",
+    "base_model_type": "API",
+    "base_model_name": "gpt-4o-1120",
+    "dataset": "cure_bench_pharse_1",
+    "additional_info": "Submission using configuration file"
+  },
+  "dataset": {
+    "dataset_name": "cure_bench_pharse_1",
+    "dataset_path": "path/to/curebench_testset_phase1.jsonl",
+    "description": "CureBench 2025 test questions"
+  },
+  "output_dir": "competition_test_results"
+}
