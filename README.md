@@ -4,6 +4,9 @@
 
 A simple inference framework for the CURE-Bench bio-medical AI competition. This starter kit provides an easy-to-use interface for generating submission data in CSV format.
 
+## Updates
+ 2025.08.08: [Q&A page](QA.md) We have created a Q&A page to share all our responses to questions, ensuring fair competition.
+
 ## Quick Start
 
 ### Installation Dependencies
