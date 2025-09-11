@@ -6,6 +6,8 @@ A simple inference framework for the CURE-Bench bio-medical AI competition. This
 
 ## Updates
  2025.08.08: **[Question&Answer page](QA.md)**: We have created a Q&A page to share all our responses to questions from participants, ensuring fair competition.
+ 
+ 2025.09.10: Added instructions for running **GPT-OSS-20B**, OpenAI’s 20B open-weight reasoning model.
 
 ## Quick Start
 
@@ -24,13 +26,23 @@ export AZURE_OPENAI_API_KEY_O1="your-api-key"
 export AZURE_OPENAI_ENDPOINT="https://your-resource.openai.azure.com/"
 ```
 
-If you want to use the open-ended models, such as Qwen:
+If you want to use the open-ended models, (e.g., Qwen, GPT-OSS-20B):
 For local models, ensure you have sufficient GPU memory:
 ```bash
 # Install CUDA-compatible PyTorch if needed
 # pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
 pip install transfomers
 ```
+**Using GPT-OSS-20B:**
+
+[GPT-OSS-20B](https://huggingface.co/openai/gpt-oss-20b) is an open-weight reasoning model from OpenAI ([arXiv:2508.10925](https://arxiv.org/abs/2508.10925)).
+
+* **Open license (Apache 2.0)** → free to use and fine-tune.
+* **Reasoning focus** → trained with the Harmony format for chain-of-thought.
+* **Biomedical strength** → on *HealthBench*, GPT-OSS-20B at high reasoning outperforms GPT-4o/o1, approaching o3.
+* **Hardware** → runs on a single 16–24 GB GPU with MXFP4 quantization; FP16 requires \~40–50GB VRAM; CPU-only is possible but very slow.
+
+* Step-by-step tutorial for running [OpenAI’s open-weight 20B model](https://huggingface.co/openai/gpt-oss-20b) on CUREBench: [tutorials/tutorial_gptoss20b.md](tutorials/tutorial_gptoss20b.md)
 
 ## 📁 Project Structure
 
@@ -83,7 +95,10 @@ python run.py --config metadata_config_test.json
 ## 🔧 Configuration
 
 ### Metadata Configuration
-Create a `metadata_config_val.json` file:
+Create a `metadata_config_val.json` file. Below are **two JSON templates** for two cases:
+
+**Example A: ChatGPT (API model)**
+
 ```json
 {
   "metadata": {
@@ -92,20 +107,54 @@ Create a `metadata_config_val.json` file:
     "track": "internal_reasoning",
     "base_model_type": "API",
     "base_model_name": "gpt-4o-1120",
-    "dataset": "cure_bench_pharse_1",
-    "additional_info": "",
+    "dataset": "cure_bench_phase_1",
+    "additional_info": "Zero-shot ChatGPT run",
     "average_tokens_per_question": "",
     "average_tools_per_question": "",
     "tool_category_coverage": ""
   },
   "dataset": {
-    "dataset_name": "cure_bench_pharse_1",
+    "dataset_name": "cure_bench_phase_1",
     "dataset_path": "/path/to/curebench_valset.jsonl",
     "description": "CureBench 2025 val questions"
   },
   "output_dir": "competition_results",
   "output_file": "submission.csv"
 }
+```
+
+**Example B: GPT-OSS-20B (open-weight model)**
+
+```json
+{
+  "metadata": {
+    "model_name": "openai/gpt-oss-20b",
+    "model_type": "LocalModel",
+    "track": "internal_reasoning",
+    "base_model_type": "OpenWeighted",
+    "base_model_name": "openai/gpt-oss-20b",
+    "dataset": "cure_bench_phase_1",
+    "additional_info": "Zero-shot GPT-OSS-20B run",
+    "average_tokens_per_question": "",
+    "average_tools_per_question": "",
+    "tool_category_coverage": ""
+  },
+  "dataset": {
+    "dataset_name": "cure_bench_phase_1",
+    "dataset_path": "/path/to/curebench_valset.jsonl",
+    "description": "CureBench 2025 val questions"
+  },
+  "output_dir": "competition_results",
+  "output_file": "submission.csv"
+}
+```
+
+**Notes:**
+
+* Other API models and open-weight models (e.g. Qwen) can be used in the same way
+* For fine-tuned model (e.g. GPT-OSS-20B) replace `"model_name"` with your fine-tuned checkpoint, e.g.:
+```json
+"model_name": "myuser/gpt-oss-20b-curebench-ft"
 ```
 
 ### Required Metadata Fields
@@ -135,7 +184,10 @@ The framework generates submission files in CSV format with a zip package contai
 - `reasoning_trace`: Model's reasoning process
 - `choice`: The choice for the multi-choice questions.
 
-The accompanying metadata includes:
+The generated submission also includes metadata. Below are **two examples**:
+
+**Example A: ChatGPT (API model)**
+
 ```json
 {
   "meta_data": {
@@ -145,7 +197,26 @@ The accompanying metadata includes:
     "base_model_type": "API", 
     "base_model_name": "gpt-4o-1120",
     "dataset": "cure_bench_pharse_1",
-    "additional_info": "",
+    "additional_info": "Zero-shot ChatGPT run",
+    "average_tokens_per_question": "",
+    "average_tools_per_question": "",
+    "tool_category_coverage": ""
+  }
+}
+```
+
+**Example B: GPT-OSS-20B (open-weight model)**
+
+```json
+{
+  "meta_data": {
+    "model_name": "openai/gpt-oss-20b",
+    "track": "internal_reasoning",
+    "model_type": "LocalModel",
+    "base_model_type": "OpenWeighted",
+    "base_model_name": "openai/gpt-oss-20b",
+    "dataset": "cure_bench_pharse_1",
+    "additional_info": "Zero-shot GPT-OSS-20B run",
     "average_tokens_per_question": "",
     "average_tools_per_question": "",
     "tool_category_coverage": ""
