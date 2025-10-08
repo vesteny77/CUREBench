@@ -1,3 +1,11 @@
+# Final Phase Result Submission Now Open!
+
+- The **final round dataset** is now available! Please download **`curebench_testset_phase2.jsonl`** from the *Data* section on Kaggle.  
+- All data in this new release is **private**, meaning no results will be shown before the deadline.  
+- You may still use the **first-round test set** for evaluation to receive immediate feedback and continue refining your model.  
+- After the competition concludes, we will **collect valid submissions** for `curebench_testset_phase2.jsonl` and perform **offline evaluation** to determine the final rankings. Evaluation metrics will be announced along with the final results.  
+- Please ensure that you **submit your results for `curebench_testset_phase2.jsonl` before the final deadline**, and that your **`meta_file`** includes all required information as outlined in our [GitHub repository](https://github.com/mims-harvard/CUREBench).
+
 # CURE-Bench Starter Kit
 
 [![ProjectPage](https://img.shields.io/badge/CUREBench-Page-red)](https://curebench.ai) [![ProjectPage](https://img.shields.io/badge/CUREBench-Kaggle-green)](https://www.kaggle.com/competitions/cure-bench) [![Q&A](https://img.shields.io/badge/Question-Answer-blue)](QA.md)
