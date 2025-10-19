@@ -21,10 +21,10 @@
     "self_consistency_k": 3,
     "is_reasoning_model": true,
     "reasoning_effort": "high",
-    "verbosity": "high",
+    "verbosity": "low",
     "max_completion_tokens": 4096,
     "tools": {
-      "enabled": true,
+      "enabled": false,
       "providers": ["txagent", "tooluniverse"]
     }
   }

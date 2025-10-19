@@ -1,0 +1,37 @@
+{
+  "planner_examples": [
+    {
+      "question": "What is the recommended dose of metformin for a patient with moderate renal impairment (eGFR 45)?",
+      "plan": "1. Check FDA label for metformin dosing guidelines\n2. Identify renal adjustment requirements for eGFR 45\n3. Review contraindications for moderate renal impairment\n4. Verify maximum safe dose for this GFR range\n5. Check monitoring requirements"
+    },
+    {
+      "question": "Can pregabalin be used safely with gabapentin?",
+      "plan": "1. Check drug interaction between pregabalin and gabapentin\n2. Review mechanism overlap and risks\n3. Check FDA labels for combination warnings\n4. Review guidelines for combination therapy\n5. Identify dose adjustments if combination is acceptable"
+    }
+  ],
+  "router_examples": [
+    {
+      "plan": "Check FDA label for metformin dosing with renal impairment",
+      "output": {
+        "tasks": [
+          {"tool": "DailyMed_search", "query": "metformin renal dosing", "category": "fda_label"},
+          {"tool": "OpenFDA_drug", "query": "metformin kidney function", "category": "safety"},
+          {"tool": "RxNorm_drugs", "query": "metformin", "category": "normalization"}
+        ]
+      }
+    }
+  ],
+  "medical_patterns": {
+    "dosing_adjustment": {
+      "renal": "CrCl < 30: contraindicated\nCrCl 30-45: reduce dose 50%\nCrCl 45-60: reduce dose 25%",
+      "hepatic": "Child-Pugh A: no adjustment\nChild-Pugh B: reduce 50%\nChild-Pugh C: contraindicated",
+      "elderly": "Start low (50% initial dose), titrate slowly"
+    },
+    "contraindication_check": [
+      "Absolute contraindications (never use)",
+      "Relative contraindications (use with caution)",
+      "Disease state interactions",
+      "Drug-drug interactions"
+    ]
+  }
+}

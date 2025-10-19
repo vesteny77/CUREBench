@@ -23,7 +23,7 @@
     "tool_budget": 5,
     "self_consistency_k": 3,
     "tools": {
-      "enabled": true,
+      "enabled": false,
       "providers": ["tooluniverse"]
     }
   }

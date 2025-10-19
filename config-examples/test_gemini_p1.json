@@ -1,0 +1,58 @@
+{
+  "metadata": {
+    "model_name": "gemini-2.5-pro",
+    "model_type": "MultiAgentModel",
+    "track": "agentic_reasoning",
+    "base_model_type": "API",
+    "base_model_name": "gemini-2.5-pro",
+    "dataset": "cure_bench_phase_1",
+    "additional_info": "Gemini with ToolUniverse integration, reflection, CoVe, medical patterns, adaptive compute",
+    "average_tokens_per_question": "",
+    "average_tools_per_question": "",
+    "tool_category_coverage": ""
+  },
+  "dataset": {
+    "dataset_name": "cure_bench_phase_1",
+    "dataset_path": "eval_dataset/curebench_testset_phase1.jsonl",
+    "description": "CUREBench 2025 final test questions phase 2"
+  },
+  "output_dir": "competition_results_optimized_gemini_test_p1",
+  "runtime": {
+    "model_type": "multiagent",
+    "step_budget": 8,
+    "tool_budget": 10,
+    "self_consistency_k": 3,
+    "is_reasoning_model": true,
+    "reasoning_effort": "high",
+    "verbosity": "medium",
+    "max_completion_tokens": 4096,
+    "temperature": 0.2,
+    "top_p": 0.9,
+    "reflection_enabled": true,
+    "max_reflection_iterations": 2,
+    "confidence_threshold": 0.85,
+    "adaptive_compute": true,
+    "cove_enabled": true,
+    "agent_roles": {
+      "default": "gemini-2.5-pro",
+      "planner": "gemini-2.5-pro",
+      "router": "gemini-2.5-pro",
+      "workers": "gemini-2.5-pro",
+      "verifier": "gemini-2.5-pro",
+      "decider": "gemini-2.5-pro"
+    },
+    "role_temperatures": {
+      "planner": 0.3,
+      "router": 0.0,
+      "workers": 0.1,
+      "verifier": 0.0,
+      "decider": 0.2
+    },
+    "tools": {
+      "enabled": true,
+      "providers": ["tooluniverse"],
+      "tooluniverse_endpoint": "http://localhost:8000",
+      "timeout": 30
+    }
+  }
+}

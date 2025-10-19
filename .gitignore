@@ -7,3 +7,6 @@ __pycache__
 *plan*.md
 *strategy*.md
 .env*
+.DS_Store
+*/.DS_Store
+data
