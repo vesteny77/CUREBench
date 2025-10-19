@@ -1,0 +1,25 @@
+{
+  "metadata": {
+    "model_name": "dummy",
+    "model_type": "DummyModel",
+    "track": "agentic_reasoning",
+    "base_model_type": "API",
+    "base_model_name": "dummy",
+    "dataset": "cure_bench_pharse_1",
+    "additional_info": "Dry-run with offline dummy model"
+  },
+  "dataset": {
+    "dataset_name": "cure_bench_pharse_1",
+    "dataset_path": "eval_dataset/curebench_valset_pharse1.jsonl",
+    "description": "CUREBench 2025 val questions"
+  },
+  "output_dir": "competition_results_dummy_val",
+  "runtime": {
+    "model_type": "dummy",
+    "temperature": 0.0,
+    "max_tokens": 256,
+    "step_budget": 3,
+    "tool_budget": 0,
+    "self_consistency_k": 1
+  }
+}

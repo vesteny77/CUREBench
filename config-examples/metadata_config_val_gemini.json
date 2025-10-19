@@ -1,0 +1,36 @@
+{
+  "metadata": {
+    "model_name": "gemini-2.5-pro",
+    "model_type": "GeminiModel",
+    "track": "agentic_reasoning",
+    "base_model_type": "API",
+    "base_model_name": "gemini-2.5-pro",
+    "dataset": "cure_bench_phase_1",
+    "additional_info": "Agentic pipeline with Gemini 2.5 Pro"
+  },
+  "dataset": {
+    "dataset_name": "cure_bench_phase_1",
+    "dataset_path": "eval_dataset/curebench_valset_phase1.jsonl",
+    "description": "CUREBench 2025 val questions"
+  },
+  "output_dir": "competition_results_gemini_val",
+  "runtime": {
+    "model_type": "gemini",
+    "temperature": 0.1,
+    "top_p": 0.9,
+    "max_tokens": 2048,
+    "step_budget": 6,
+    "tool_budget": 5,
+    "self_consistency_k": 3,
+    "tools": {
+      "enabled": true,
+      "providers": ["tooluniverse"]
+    },
+    "retry_config": {
+      "max_retries": 5,
+      "initial_sleep": 2.0,
+      "max_sleep": 60.0,
+      "exponential_base": 2.0
+    }
+  }
+}

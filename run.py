@@ -15,9 +15,11 @@ Usage:
 
 import os
 from eval_framework import CompetitionKit, load_and_merge_config, create_metadata_parser
+from dotenv import load_dotenv
 
 
 def main():
+    load_dotenv(override=True)
     # Create argument parser with metadata support
     parser = create_metadata_parser()
     
@@ -30,7 +32,23 @@ def main():
     output_file = getattr(args, 'output_file', "submission.csv") 
     dataset_name = getattr(args, 'dataset')
     model_name = getattr(args, 'model_path', None) or getattr(args, 'model_name', None)
-    model_class = getattr(args, 'model_class', 'auto')
+    # Determine model_type from args or runtime config; fallback to auto
+    model_type = getattr(args, 'model_type', None)
+    # Support runtime.model_type keys merged by load_and_merge_config
+    if not model_type and hasattr(args, 'runtime_model_type'):
+        model_type = getattr(args, 'runtime_model_type')
+    # Normalize common synonyms
+    mapping = {
+        'ChatGPTModel': 'chatgpt',
+        'AzureGPTModel': 'chatgpt',
+        'GeminiModel': 'gemini',
+        'MultiAgentModel': 'multiagent',
+        'DummyModel': 'dummy',
+    }
+    if model_type in mapping:
+        model_type = mapping[model_type]
+    if not model_type:
+        model_type = 'auto'
     
     """Run evaluation with metadata support"""
     print("\n" + "="*60)
@@ -47,12 +65,21 @@ def main():
     
     kit = CompetitionKit(config_path=config_path)
     
-    print(f"Loading model: {model_name}")
-    kit.load_model(model_name, model_class)
+    print(f"Loading model: {model_name} (type={model_type})")
+    kit.load_model(model_name, model_type)
     
     # Show available datasets
     print("Available datasets:")
-    kit.list_datasets()
+    if hasattr(kit, 'list_datasets'):
+        kit.list_datasets()
+    else:
+        # Fallback: print keys
+        try:
+            print("-" * 50)
+            for name, config in kit.datasets.items():
+                print(f"  {name}: {config.get('description', '')}")
+        except Exception:
+            pass
     
     # Run evaluation (with optional subset_size)
     subset_size = getattr(args, 'subset_size', None)

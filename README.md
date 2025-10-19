@@ -172,6 +172,54 @@ The metadata structure (example):
 }
 ```
 
+## 🤖 Agentic Pipeline (Track 2)
+
+The starter kit now ships with a configurable multi-agent workflow for Track&nbsp;2 (`agentic_reasoning`). Key capabilities:
+
+- **Role-based orchestration** – Planner → Tool router → Evidence workers → Verifier → Decider, with optional self-consistency voting.
+- **Model mixing** – Assign GPT‑5 (Azure OpenAI) and Gemini 2.5 Pro to different roles via `runtime.agent_roles`.
+- **Tool hooks** – Optional connectors for TxAgent and ToolUniverse. Configure under `runtime.tools` with `enabled`, `providers`, and endpoints.
+- **Telemetry auto-fill** – `average_tools_per_question`, `average_tokens_per_question`, and `tool_category_coverage` are written to `meta_data.json` automatically when telemetry is available.
+
+### Quick configs
+
+- Single model (GPT‑5): `config-examples/metadata_config_val_gpt5.json`
+- Single model (Gemini 2.5 Pro): `config-examples/metadata_config_val_gemini.json`
+- Hybrid (GPT‑5 planner & verifier + Gemini workers & decider): `config-examples/metadata_config_val_hybrid.json`
+
+Run on the validation set (subset of 100 examples shown):
+
+```bash
+python run.py --config CUREBench/config-examples/metadata_config_val_hybrid.json --subset-size 100
+```
+
+To enable real tool calls, set `runtime.tools.enabled` to `true` and provide endpoints/keys, e.g.:
+
+```json
+{
+  "runtime": {
+    "model_type": "multiagent",
+    "tools": {
+      "enabled": true,
+      "providers": ["txagent", "tooluniverse"],
+      "txagent_endpoint": "https://<txagent-host>",
+      "txagent_api_key": "...",
+      "tooluniverse_endpoint": "https://<tu-host>",
+      "timeout": 25
+    }
+  }
+}
+```
+
+### Environment variables
+
+| Purpose | Variables |
+|---------|-----------|
+| Azure OpenAI (GPT‑5) | `AZURE_OPENAI_API_KEY_O1` / `AZURE_OPENAI_KEY`, `AZURE_OPENAI_ENDPOINT` / `AZURE_ENDPOINT`, optional `AZURE_API_VERSION` |
+| Google Gemini | `GOOGLE_API_KEY` (or `GOOGLE_APPLICATION_CREDENTIAL` pointing to JSON with `api_key`) |
+| TxAgent (optional) | `TXAGENT_ENDPOINT`, `TXAGENT_API_KEY` |
+| ToolUniverse (optional) | `TOOLUNIVERSE_ENDPOINT` |
+
 ## Model Tutorials
 
 * Step-by-step tutorial for running [OpenAI’s open-weight 20B model](https://huggingface.co/openai/gpt-oss-20b) on CUREBench: [tutorials/gpt-oss-20b/tutorial_gptoss20b.md](tutorials/gpt-oss-20b/tutorial_gptoss20b.md)

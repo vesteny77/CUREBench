@@ -1,0 +1,42 @@
+{
+  "metadata": {
+    "model_name": "gemini-with-tools",
+    "model_type": "MultiAgentModel",
+    "track": "agentic_reasoning",
+    "base_model_type": "API",
+    "base_model_name": "gemini-2.5-pro",
+    "dataset": "cure_bench_phase_2",
+    "additional_info": "Gemini 2.5 Pro with ToolUniverse integration for therapeutic reasoning (test phase 2)",
+    "average_tokens_per_question": "",
+    "average_tools_per_question": "",
+    "tool_category_coverage": ""
+  },
+  "dataset": {
+    "dataset_name": "cure_bench_phase_2",
+    "dataset_path": "eval_dataset/curebench_testset_phase2.jsonl",
+    "description": "CUREBench 2025 final test questions phase 2"
+  },
+  "output_dir": "competition_results_tools_gemini_test_p2",
+  "runtime": {
+    "model_type": "multiagent",
+    "temperature": 0.3,
+    "top_p": 0.9,
+    "max_tokens": 2048,
+    "step_budget": 8,
+    "tool_budget": 10,
+    "self_consistency_k": 3,
+    "agent_roles": {
+      "planner": "gemini-2.5-pro",
+      "router": "gemini-2.5-pro",
+      "workers": "gemini-2.5-pro",
+      "verifier": "gemini-2.5-pro",
+      "decider": "gemini-2.5-pro"
+    },
+    "tools": {
+      "enabled": true,
+      "providers": ["tooluniverse"],
+      "tooluniverse_endpoint": "http://localhost:8000",
+      "timeout": 30
+    }
+  }
+}

@@ -1,0 +1,5 @@
+You will be given:
+- A multiple choice question and its options
+- The agent’s open-ended answer
+
+Task: Map the agent’s answer to a single option label A/B/C/D/E (or None if no option matches). Output only the label.

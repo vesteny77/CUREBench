@@ -1,0 +1,41 @@
+{
+  "metadata": {
+    "model_name": "hybrid-gpt5-gemini",
+    "model_type": "MultiAgentModel",
+    "track": "agentic_reasoning",
+    "base_model_type": "API",
+    "base_model_name": "gpt-5+gemini-2.5-pro",
+    "dataset": "cure_bench_pharse_1",
+    "additional_info": "Hybrid: GPT-5 (planner+verifier) + Gemini (workers+decider)"
+  },
+  "dataset": {
+    "dataset_name": "cure_bench_pharse_1",
+    "dataset_path": "eval_dataset/curebench_valset_pharse1.jsonl",
+    "description": "CUREBench 2025 val questions"
+  },
+  "output_dir": "competition_results_hybrid_val",
+  "runtime": {
+    "model_type": "multiagent",
+    "default_temperature": 0.3,
+    "top_p": 0.9,
+    "step_budget": 8,
+    "tool_budget": 5,
+    "self_consistency_k": 3,
+    "reasoning_effort": "high",
+    "verbosity": "verbose",
+    "max_completion_tokens": 4096,
+    "max_tokens": 2048,
+    "agent_roles": {
+      "planner": "gpt-5",
+      "router": "gpt-5",
+      "workers": "gemini-2.5-pro",
+      "verifier": "gpt-5",
+      "decider": "gemini-2.5-pro"
+    },
+    "tools": {
+      "enabled": true,
+      "providers": ["tooluniverse"],
+      "timeout": 20
+    }
+  }
+}

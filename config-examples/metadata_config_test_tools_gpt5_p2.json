@@ -1,0 +1,43 @@
+{
+  "metadata": {
+    "model_name": "gpt-5-with-tools",
+    "model_type": "MultiAgentModel",
+    "track": "agentic_reasoning",
+    "base_model_type": "API",
+    "base_model_name": "gpt-5",
+    "dataset": "cure_bench_phase_2",
+    "additional_info": "GPT-5 with ToolUniverse integration for therapeutic reasoning (test phase 2)",
+    "average_tokens_per_question": "",
+    "average_tools_per_question": "",
+    "tool_category_coverage": ""
+  },
+  "dataset": {
+    "dataset_name": "cure_bench_phase_2",
+    "dataset_path": "eval_dataset/curebench_testset_phase2.jsonl",
+    "description": "CUREBench 2025 final test questions phase 2"
+  },
+  "output_dir": "competition_results_tools_gpt5_test_p2",
+  "runtime": {
+    "model_type": "multiagent",
+    "step_budget": 8,
+    "tool_budget": 10,
+    "self_consistency_k": 3,
+    "is_reasoning_model": true,
+    "reasoning_effort": "high",
+    "verbosity": "medium",
+    "max_completion_tokens": 4096,
+    "agent_roles": {
+      "planner": "gpt-5",
+      "router": "gpt-5",
+      "workers": "gpt-5",
+      "verifier": "gpt-5",
+      "decider": "gpt-5"
+    },
+    "tools": {
+      "enabled": true,
+      "providers": ["tooluniverse"],
+      "tooluniverse_endpoint": "http://localhost:8000",
+      "timeout": 30
+    }
+  }
+}

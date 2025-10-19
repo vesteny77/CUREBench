@@ -1,0 +1,31 @@
+{
+  "metadata": {
+    "model_name": "gpt-5",
+    "model_type": "ChatGPTModel",
+    "track": "agentic_reasoning",
+    "base_model_type": "API",
+    "base_model_name": "gpt-5",
+    "dataset": "cure_bench_phase_2",
+    "additional_info": "Agentic pipeline with GPT-5 (test phase)"
+  },
+  "dataset": {
+    "dataset_name": "cure_bench_phase_2",
+    "dataset_path": "eval_dataset/curebench_testset_phase2.jsonl",
+    "description": "CUREBench 2025 final test questions"
+  },
+  "output_dir": "competition_results_gpt5_test",
+  "runtime": {
+    "model_type": "chatgpt",
+    "step_budget": 8,
+    "tool_budget": 5,
+    "self_consistency_k": 3,
+    "is_reasoning_model": true,
+    "reasoning_effort": "high",
+    "verbosity": "medium",
+    "max_completion_tokens": 4096,
+    "tools": {
+      "enabled": true,
+      "providers": ["tooluniverse"]
+    }
+  }
+}
